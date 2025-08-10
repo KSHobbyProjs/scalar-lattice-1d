@@ -1,0 +1,60 @@
+/**
+ * @class Field
+ * @brief Stores and manipulates a real scalar field on a 2D lattice (time × space).
+ *
+ * The field is stored as a flattened 1D array in row-major order (time-major).
+ * Provides accessors for field values, utilities for periodic indexing,
+ * and routines for action evaluation.
+ */
+
+#include "Field.h"
+// ----------- CONSTRUCTOR ---------------------
+Field::Field(int nt, int nx, double m, double lambda, double a)
+    : nt_(nt), nx_(nx), m_(m), lambda_(lambda), a_(a), data_(nt * nx, 1.0) 
+{
+        double aa = a_ * a_;                             ///< lattice spacing squared
+        mass_coeff_ = 0.5 * aa * m_ * m_;                ///< coefficient for the mass term in S
+        coupling_coeff_ = aa * lambda_ / 24.0;           ///< coefficient for the quartic coupling term in S
+}
+
+// ----------- FIELD METHODS -------------------
+double Field::total_action() const {
+    double tot_action = 0.0;
+
+    for (int t = 0; t < nt_; ++t) {
+        for (int x = 0; x < nx_; ++x) {
+            double phi = (*this)(t, x);                  ///< field at (t, x)
+            double phi2 = phi * phi;                     ///< field at (t, x) squared
+
+            double phi_tleft = (*this)(tleft(t), x);     ///< field at (t - 1, x) (w/ periodic BCs)
+            double phi_tright = (*this)(tright(t), x);   ///< field at (t + 1, x) (w/ periodic BCs)
+            double phi_xleft = (*this)(t, xleft(x));     ///< field at (t, x - 1) (w/ periodic BCs)
+            double phi_xright = (*this)(t, xright(x));   ///< field at (t, x + 1) (w/ periodic BCs)
+
+            double dphi_dt = phi_tright - phi_tleft;     ///< partial derivative of phi wrt t
+            double dphi_dx = phi_xright - phi_xleft;     ///< partial derivative of phi wrt x
+            
+            tot_action += 0.125 * (dphi_dt * dphi_dt     ///< change in total action per point t, x
+                +  dphi_dx * dphi_dx)
+                + mass_coeff_ * phi2
+                + coupling_coeff_ * phi2 * phi2;
+        }
+    }
+    return tot_action;
+}
+
+
+double Field::local_action_change(double phi, double phi_x2left, double phi_x2right,
+                                  double phi_t2left, double phi_t2right, double new_phi) const {
+    double eta = new_phi - phi;
+    double phi2 = phi * phi;
+    double new_phi2 = new_phi * new_phi;
+    double neighbor_sum = phi_x2right + phi_x2left + phi_t2right + phi_t2left;
+
+    double local_action_change = 0.5*eta*eta + eta*phi - 0.25*eta*neighbor_sum   ///< kinetic term local action change
+        + mass_coeff_ * (new_phi2 - phi2)                                        ///< mass term local action change
+        + coupling_coeff_ * (new_phi2 * new_phi2 - phi2 * phi2);                 ///< coupling term local action change
+                                                                                 ///
+    return local_action_change;
+}
+

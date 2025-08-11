@@ -18,6 +18,6 @@ class Metropolis {
         std::uniform_real_distribution<double> proposed_change_dist_; ///< Uniform distribution for proposed change eta 
         std::uniform_real_distribution<double> accept_dist_;          ///< Uniform distribution for accept / reject prob
 
-        double propose_change() const;                                ///< Alters a field value at a lattice point
-        bool accept_reject(double delta_s) const;                     ///< Decides to keep or reject a change based on dS
+        double propose_change();                                      ///< Alters a field value at a lattice point
+        bool accept_reject(double delta_s);                           ///< Decides to keep or reject a change based on dS
 };

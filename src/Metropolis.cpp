@@ -29,12 +29,12 @@ void Metropolis::sweep() {
     }
 }
 
-double Metropolis::propose_change() const {
+double Metropolis::propose_change() {
     double eta = proposed_change_dist_(rng_);
     return eta;
 }
 
-bool Metropolis::accept_reject(double delta_s) const {
+bool Metropolis::accept_reject(double delta_s) {
     if (delta_s <= 0) {
         return true;                            ///< return true always if action decreases
     }

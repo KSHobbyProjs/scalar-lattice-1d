@@ -23,7 +23,7 @@ class Field {
         
         // ----------- METHODS ----------------------
         double total_action() const;
-        double local_action_change(double phi, double phi_xleft, double phi_xright, double phi_tleft, double phi_tright, double new_val) const;
+        double local_action_change(int t, int x, double eta) const;
 
     private:
         int nt_, nx_;                   ///< dimensions
@@ -31,7 +31,7 @@ class Field {
         double mass_coeff_;             ///< coefficient for the mass term in S
         double coupling_coeff_;         ///< coefficient for the quartic coupling term in S
         std::vector<double> data_;      ///< field data
-
+                                                      
         // ----------- Periodic BCs Methods ----
         int xleft(int x) const {return (x - 1 + nx_) % nx_;}
         int xright (int x) const {return (x + 1) % nx_;}

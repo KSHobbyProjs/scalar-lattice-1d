@@ -44,17 +44,23 @@ double Field::total_action() const {
 }
 
 
-double Field::local_action_change(double phi, double phi_x2left, double phi_x2right,
-                                  double phi_t2left, double phi_t2right, double new_phi) const {
-    double eta = new_phi - phi;
+double Field::local_action_change(int t, int x, double eta) const {              ///< computes the change in action due to a change by eta at (t, x)
+    double phi = (*this)(t, x);
     double phi2 = phi * phi;
+    
+    double phi_x2right = (*this)(t, xright(xright(x)));                          ///< neighbor (t, x + 2)
+    double phi_x2left = (*this)(t, xleft(xleft(x)));                             ///< neighbor (t, x - 2)
+    double phi_t2left = (*this)(tleft(tleft(t)), x);                             ///< neighbor (t - 2, x)
+    double phi_t2right = (*this)(tright(tright(t)), x);                          ///< neighbor (t + 2, x)
+    
+    double new_phi = phi + eta;
     double new_phi2 = new_phi * new_phi;
     double neighbor_sum = phi_x2right + phi_x2left + phi_t2right + phi_t2left;
 
-    double local_action_change = 0.5*eta*eta + eta*phi - 0.25*eta*neighbor_sum   ///< kinetic term local action change
-        + mass_coeff_ * (new_phi2 - phi2)                                        ///< mass term local action change
-        + coupling_coeff_ * (new_phi2 * new_phi2 - phi2 * phi2);                 ///< coupling term local action change
-                                                                                 ///
+    double local_action_change = 0.5*eta*eta + eta*phi - 0.25*eta*neighbor_sum   ///< local action change due to kinetic term
+        + mass_coeff_ * (new_phi2 - phi2)                                        ///< local action change due to mass term
+        + coupling_coeff_ * (new_phi2 * new_phi2 - phi2 * phi2);                 ///< local action change due to coupling term
+                                                                                 
     return local_action_change;
 }
 

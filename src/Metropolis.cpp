@@ -2,7 +2,7 @@
  * @class Metropolis
  * @brief Handles metropolis updates over a real scalar field on a 2D lattice (time × space).
  *
- * The class takes the field by reference
+ * The class takes the field by reference, the step for proposed changes epsilon, and a PRNG seed
  */
 
 #include "Metropolis.h"
@@ -22,9 +22,7 @@ void Metropolis::sweep() {
             double delta_s = phi_.local_action_change(t, x, eta);
             bool accept = accept_reject(delta_s);
 
-            if (accept) {
-                   phi_(t, x) += eta;
-            }
+            if (accept) { phi_(t, x) += eta; }
         }
     }
 }

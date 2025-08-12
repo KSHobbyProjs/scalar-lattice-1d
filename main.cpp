@@ -1,8 +1,19 @@
 #include <iostream>
 #include "Field.h"
+#include "Metropolis.h"
+#include "Simulation.h"
 
 int main() {
-    Field phi(10, 5); // create a 10x5 field
+    int nx = 32;
+    int nt = 32;
+
+    double epsilon = 1.0;
+    unsigned seed = 153243;
+    
+    Field phi(nt, nx);
+    Metropolis updater(phi, epsilon, seed);
+    Simulation sim(updater);
+    
     std::cout << "phi(2,2) from 1.0 to 0.0 " << phi.local_action_change(2, 2, 1.0) << std::endl;
     // phi(2,3) = 42.0; // set a value
     std::cout << "phi(5,0) = " << phi(5,0) << std::endl;

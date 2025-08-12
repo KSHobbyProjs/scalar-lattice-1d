@@ -18,7 +18,7 @@ Field::Field(int nt, int nx, double m, double lambda, double a)
 }
 
 // ----------- FIELD METHODS -------------------
-double Field::total_action() const {
+double Field::total_action() const {                     ///< computes the total action
     double tot_action = 0.0;
 
     for (int t = 0; t < nt_; ++t) {

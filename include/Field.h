@@ -15,9 +15,11 @@ class Field {
         // ----------- ACCESSORS --------------------
         double& operator()(int t, int x) {return data_.at(t * nx_ + x);}
         double operator()(int t, int x) const {return data_.at(t * nx_ + x);}
+        
         int length_x() const {return nx_;}
         int length_t() const {return nt_;}
-        double mass() const {return m_;}
+
+        double mass() const {return m_;}         
         double lambda() const {return lambda_;}
         double a() const {return a_;} 
         

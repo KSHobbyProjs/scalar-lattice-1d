@@ -10,7 +10,7 @@
 #include <cmath>
 // --------------------------- CONSTRUCTOR -------------------------------
 Metropolis::Metropolis(Field& phi, double epsilon, unsigned seed)
-    : phi_(phi), rng_(seed), proposed_change_dist_(-epsilon, epsilon), accept_dist_(0.0, 1.0) {}
+    : phi_(phi), rng_(seed), proposed_change_dist_(-epsilon, epsilon), accept_dist_(0.0, 1.0), proposed_states_(0), accepted_states_(0) {}
 
 // --------------------------- FIELD METHODS -----------------------------
 void Metropolis::sweep() {
@@ -22,7 +22,11 @@ void Metropolis::sweep() {
             double delta_s = phi_.local_action_change(t, x, eta);
             bool accept = accept_reject(delta_s);
 
-            if (accept) { phi_(t, x) += eta; }
+            proposed_states_ += 1;
+            if (accept) { 
+                phi_(t, x) += eta;
+                accepted_states_ += 1;            
+            }
         }
     }
 }
@@ -42,5 +46,12 @@ bool Metropolis::accept_reject(double delta_s) {
     }
 }
 
+double Metropolis::acceptance_rate() const {
+    return static_cast<double>(accepted_states_) / static_cast<double>(proposed_states_);
+}
 
+void Metropolis::reset_acceptance_rate() {
+    proposed_states_ = 0;
+    accepted_states_ = 0;
+}
 

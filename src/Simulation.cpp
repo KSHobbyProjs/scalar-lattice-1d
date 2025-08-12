@@ -7,6 +7,7 @@
 
 #include "Metropolis.h"
 #include "Simulation.h"
+#include "Field.h"
 
 // --------------------------- CONSTRUCTOR ------------------------------
 Simulation::Simulation(Metropolis& updater)
@@ -18,6 +19,7 @@ void Simulation::thermalize(int num_therm_steps) {
 }
 
 // --------------------------- MEASUREMENT METHODS ----------------------
-double phi_spatial_avg const {
-    Field& phi = updater_.phi();
+double Simulation::phi_spatial_avg() const {
+    const Field& phi = updater_.phi();
+    return 0;
 }

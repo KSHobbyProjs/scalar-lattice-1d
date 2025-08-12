@@ -13,7 +13,7 @@ class Metropolis {
         Metropolis(Field& phi, double epsilon, unsigned seed = 10531);
 
         // ------------------ ACCESSORS --------------------
-        const Field& phi() {return phi_;}
+        const Field& phi() const {return phi_;}
 
         // ------------------ UPDATE METHODS ---------------
         void sweep();                                                 ///< sweeps over all lattice points

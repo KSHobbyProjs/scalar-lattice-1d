@@ -16,7 +16,7 @@ class Simulation {
         void sample(int num_samples, int num_sweeps);
 
         // ---------------------- MEASUREMENT METHODS ---------------
-        double phi_spatial_avg() const;
+        double phi_variance() const;
 
     private:
         Metropolis& updater_;         ///< metropolis update class

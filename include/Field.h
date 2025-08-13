@@ -28,10 +28,10 @@ class Field {
         double local_action_change(int t, int x, double eta) const;
 
     private:
-        int nt_, nx_;                   ///< dimensions
-        double m_, lambda_, a_;         ///< field parameters (mass, quartic coupling, lattice spacing) 
-        double mass_coeff_;             ///< coefficient for the mass term in S
-        double coupling_coeff_;         ///< coefficient for the quartic coupling term in S
+        const int nt_, nx_;             ///< dimensions
+        const double m_, lambda_, a_;   ///< field parameters (mass, quartic coupling, lattice spacing) 
+        const double mass_coeff_;       ///< coefficient for the mass term in S
+        const double coupling_coeff_;   ///< coefficient for the quartic coupling term in S
         std::vector<double> data_;      ///< field data
                                                       
         // ----------- Periodic BCs Methods ----

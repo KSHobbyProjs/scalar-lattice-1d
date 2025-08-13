@@ -19,10 +19,10 @@ class Metropolis {
         void reset_acceptance_rate();                                 ///< resets the Metropolis acceptance rate
 
     private:
-        std::mt19937 rng_;                                            ///< PRNG (Mersenne Twister)
+        std::mt19937 rng_;                                                  ///< PRNG (Mersenne Twister)
         std::uniform_real_distribution<double> proposed_change_dist_; ///< uniform distribution for proposed change eta 
         std::uniform_real_distribution<double> accept_dist_;          ///< uniform distribution for accept / reject prob
-        unsigned proposed_states_, accepted_states_;                  ///< counters to keep track of Metropolis acceptance rate
+        unsigned proposed_states_, accepted_states_;                        ///< counters to keep track of Metropolis acceptance rate
 
         // ------------------ UPDATE METHODS ---------------
         double propose_change();                                      ///< alters a field value at a lattice point

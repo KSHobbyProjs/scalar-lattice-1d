@@ -10,12 +10,9 @@
 #include "Field.h"
 // ----------- CONSTRUCTOR ---------------------
 Field::Field(int nt, int nx, double m, double lambda, double a)
-    : nt_(nt), nx_(nx), m_(m), lambda_(lambda), a_(a), data_(nt * nx, 1.0) 
-{
-        double aa = a_ * a_;                             ///< lattice spacing squared
-        mass_coeff_ = 0.5 * aa * m_ * m_;                ///< coefficient for the mass term in S
-        coupling_coeff_ = aa * lambda_ / 24.0;           ///< coefficient for the quartic coupling term in S
-}
+    : nt_(nt), nx_(nx), m_(m), lambda_(lambda), a_(a),
+    mass_coeff_(0.5 * a_*a_ * m_*m_), coupling_coeff_(a_*a_ * lambda_ / 24.0),       ///< caching this rather than computing it every time
+    data_(nt * nx, 0.0) {}                                                           ///< in local_action_change is a negligible time save but it looks cleaner anyway
 
 // ----------- FIELD METHODS -------------------
 double Field::total_action() const {                     ///< computes the total action

@@ -9,7 +9,7 @@
 class Simulation {
     public:
         // ---------------------- CONSTRUCTOR -----------------------
-        Simulation(Metropolis& updater);
+        Simulation(Field& phi, Metropolis& updater);
    
         // ---------------------- SAMPLING METHODS ------------------
         void thermalize(int num_therm_steps);
@@ -20,4 +20,5 @@ class Simulation {
 
     private:
         Metropolis& updater_;         ///< metropolis update class
+        Field& phi_;                  ///< reference to the field object
 };

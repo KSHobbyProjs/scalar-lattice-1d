@@ -10,19 +10,15 @@
 class Metropolis {
     public:
         // ------------------ CONSTRUCTOR -----------------
-        Metropolis(Field& phi, double epsilon, unsigned seed = 10531);
-
-        // ------------------ ACCESSORS --------------------
-        const Field& phi() const {return phi_;}                       ///< field accessor
+        Metropolis(double epsilon, unsigned seed = 10531);
 
         // ------------------ UPDATE METHODS ---------------
-        void sweep();                                                 ///< Metropolis sweep over all lattice points
+        void sweep(Field& phi);                                       ///< Metropolis sweep over all lattice points
         
         double acceptance_rate() const;                               ///< calculates the Metropolis acceptance rate
         void reset_acceptance_rate();                                 ///< resets the Metropolis acceptance rate
 
     private:
-        Field& phi_;                                                  ///< field data reference
         std::mt19937 rng_;                                            ///< PRNG (Mersenne Twister)
         std::uniform_real_distribution<double> proposed_change_dist_; ///< uniform distribution for proposed change eta 
         std::uniform_real_distribution<double> accept_dist_;          ///< uniform distribution for accept / reject prob

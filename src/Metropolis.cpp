@@ -9,22 +9,22 @@
 #include "Field.h"
 #include <cmath>
 // --------------------------- CONSTRUCTOR -------------------------------
-Metropolis::Metropolis(Field& phi, double epsilon, unsigned seed)
-    : phi_(phi), rng_(seed), proposed_change_dist_(-epsilon, epsilon), accept_dist_(0.0, 1.0), proposed_states_(0), accepted_states_(0) {}
+Metropolis::Metropolis(double epsilon, unsigned seed)
+    : rng_(seed), proposed_change_dist_(-epsilon, epsilon), accept_dist_(0.0, 1.0), proposed_states_(0), accepted_states_(0) {}
 
 // --------------------------- FIELD METHODS -----------------------------
-void Metropolis::sweep() {
-    int nt = phi_.length_t();
-    int nx = phi_.length_x();
+void Metropolis::sweep(Field& phi) {
+    int nt = phi.length_t();
+    int nx = phi.length_x();
     for (int t = 0; t < nt; ++t) {
         for (int x = 0; x < nx; ++x) { 
             double eta = propose_change();
-            double delta_s = phi_.local_action_change(t, x, eta);
+            double delta_s = phi.local_action_change(t, x, eta);
             bool accept = accept_reject(delta_s);
 
             proposed_states_ += 1;
             if (accept) { 
-                phi_(t, x) += eta;
+                phi(t, x) += eta;
                 accepted_states_ += 1;            
             }
         }
@@ -47,7 +47,8 @@ bool Metropolis::accept_reject(double delta_s) {
 }
 
 double Metropolis::acceptance_rate() const {
-    return static_cast<double>(accepted_states_) / static_cast<double>(proposed_states_);
+    double acceptance_rate = static_cast<double>(accepted_states_) / static_cast<double>(proposed_states_);
+    return acceptance_rate;
 }
 
 void Metropolis::reset_acceptance_rate() {

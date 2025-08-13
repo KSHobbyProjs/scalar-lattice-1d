@@ -11,8 +11,8 @@ int main() {
     unsigned seed = 153243;
     
     Field phi(nt, nx);
-    Metropolis updater(phi, epsilon, seed);
-    Simulation sim(updater);
+    Metropolis updater(epsilon, seed);
+    Simulation sim(phi, updater);
     
     std::cout << "phi(2,2) from 1.0 to 0.0 " << phi.local_action_change(2, 2, 1.0) << std::endl;
     // phi(2,3) = 42.0; // set a value

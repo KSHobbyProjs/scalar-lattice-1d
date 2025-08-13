@@ -10,16 +10,15 @@
 #include "Field.h"
 
 // --------------------------- CONSTRUCTOR ------------------------------
-Simulation::Simulation(Metropolis& updater)
-    : updater_(updater) {}
+Simulation::Simulation(Field& phi, Metropolis& updater)
+    : phi_(phi), updater_(updater) {}
 
 // --------------------------- SAMPLE METHODS ---------------------------
 void Simulation::thermalize(int num_therm_steps) {
-    for (int _ = 0; _ < num_therm_steps; ++_){ updater_.sweep(); }
+    for (int _ = 0; _ < num_therm_steps; ++_){ updater_.sweep(phi_); }
 }
 
 // --------------------------- MEASUREMENT METHODS ----------------------
 double Simulation::phi_spatial_avg() const {
-    const Field& phi = updater_.phi();
     return 0;
 }

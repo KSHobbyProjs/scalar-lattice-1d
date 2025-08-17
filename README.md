@@ -12,15 +12,17 @@ This project implements a lattice quantum field theory(QFT) in 1+1 dimensions fo
 
 ### Observables
 The simulation calculates several key values to probe the field dynamics:
- - Two-point correlation functions: Measures ho field values at different points are correlated (related to the probability that a particle created at $x$ propagates to $y$.).
+ - Two-point correlation functions: Measures how field values at different points are correlated (related to the probability that a particle created at $x$ propagates to $y$.).
  - Field expectation value: Average field over the lattice, $\langle \phi \rangle$ (average vacuum behavior of the field).
  - Susceptibility: Measures response to small perturbations (useful for studying phase transitions).
  - Binder cumulant: Higher-order statistic that helps identify **critical behavior** and **phase transitions**.
 
-### Features
+---
 
 ### Getting Started
 A lattice qft simulation in 1+1D with a scalar quartic-potential Lagrangian. We discretize spacetime into a lattice, and use Monte Carlo techniques (metropolis algorithm) to sample field configurations from the Euclidean path integral. We calculate two-point correlation functions, field expectation values, susceptibility, and the Binder cumulant.
+
 ---
-#### This project was made in an effort to self-learn lattice QFT methods and C++.
+
+#### This project was made in an effort to self-learn lattice QFT methods and C++. It has little to no practical use for other people.
 Made in August of 2025.

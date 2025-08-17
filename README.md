@@ -1,5 +1,4 @@
 # scalar-lattice-1d
----
 ## 1+1D Lattice QFT Simulation
 This project implements a lattice quantum field theory(QFT) in 1+1 dimensions for a real, scalar field with a quartic coupling potential. It demonstrates how to numerically study quantum field theories using lattice discretization and Monte Carlo sampling techniques.
 ### Overview

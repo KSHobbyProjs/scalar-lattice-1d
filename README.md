@@ -40,5 +40,7 @@ After running the binary, an output file will be located in `output/output.dat`.
 - Create makefile
 - Make the README (this!) more clear on thermalization
 
+--- 
+
 #### This project was made in an effort to self-learn lattice QFT methods and C++. It has little to no practical use for other people.
 Made in August of 2025.

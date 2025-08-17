@@ -6,7 +6,7 @@ This project implements a lattice quantum field theory(QFT) in 1+1 dimensions fo
 
 **Discretization**: Spacetime is discretized into a lattice, replacing derivatives with finite differences (we use central difference).
 
-**Sampling**: We use the Metropolis algorithm to generate field configurations distributed according the Euclidean path integral: at each spacetime point $(t,x)$, we randomly change the field at $\phi(t,x)$. We accept the change with probability $e^{-\delta S}$ where $\delta S$ is the change in the action due to the change in the field value (probability is equal to 1 if $\delta S\le 0$. $e^{-S}$).
+**Sampling**: We use the Metropolis algorithm to generate field configurations distributed according the Euclidean path integral: at each spacetime point $(t,x)$, we randomly change the field at $\phi(t,x)$. We accept the change with probability $e^{-\Delta S}$ where $\Delta S$ is the change in the action due to the change in the field value (probability is equal to 1 if $\Delta S\le 0$. $e^{-S}$).
 
 ---
 

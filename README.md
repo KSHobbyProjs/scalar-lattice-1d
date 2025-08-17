@@ -10,11 +10,11 @@ This project implements a lattice quantum field theory(QFT) in 1+1 dimensions fo
 
 ---
 
-### Observables
+### Observables **CURRENTLY STILL UNDER CONSTRUCTION**
 The simulation calculates several key values to probe the field dynamics:
  - Two-point correlation functions: Measures how field values at different points are correlated (related to the probability that a particle created at $x$ propagates to $y$.).
- - Field expectation value: Average field over the lattice, $\langle \phi \rangle$ (average vacuum behavior of the field).
- - Susceptibility: Measures response to small perturbations (useful for studying phase transitions).
+ - Field expectation value: Average field over the lattice, $\langle \phi \rangle$ (average vacuum behavior of the field). 
+ - Susceptibility: Measures response to small perturbations (useful for studying phase transitions).                         
  - Binder cumulant: Higher-order statistic that helps identify **critical behavior** and **phase transitions**.
 
 ---
@@ -24,9 +24,21 @@ Clone the repository:
 ```bash 
 git clone https://github.com/KSHobbyProjs/scalar-lattice-1d.git 
 ```
-A lattice qft simulation in 1+1D with a scalar quartic-potential Lagrangian. We discretize spacetime into a lattice, and use Monte Carlo techniques (metropolis algorithm) to sample field configurations from the Euclidean path integral. We calculate two-point correlation functions, field expectation values, susceptibility, and the Binder cumulant.
+In `main.cpp`, adjust the lattice dimensions (`nt` for number of time points; `nx` for number of spatial points), Metropolis step parameter (`epsilon`), the PRNG seed (`seed`), and the number of steps for thermalization (`num_thermalize_steps`) at the top of the file. Compile with whatever C++ compiler you have. For g++ with maximum optimization:
+```bash
+g++ -O3 -Iinclude src/Field.cpp src/Metropolis.cpp src/Simulation.cpp main.cpp -o test
+```
+After running the binary, an output file will be located in `output/output.dat`. The first column is the sweep number, and the second column is $\langle \phi^2\rangle$ (the variance of the single field configuration, not the variance of the ensemble). This can be viewed with GNUplot and is helpful to see if you've set enough thermalization steps. If it hasn't plateaued, you need more steps. This is the only "observable" computed at the moment.
 
 ---
+### TODO
+- Move config information from main.cpp to a config file
+- Set seed randomly based on device data
+- Set epsilon automatically during thermalization
+- Compute observables
+- Create Python script to visualize data
+- Create makefile
+- Make the README (this!) more clear on thermalization
 
 #### This project was made in an effort to self-learn lattice QFT methods and C++. It has little to no practical use for other people.
 Made in August of 2025.
